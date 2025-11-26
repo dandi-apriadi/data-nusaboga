@@ -1,0 +1,72 @@
+# Node.js backend
+/backend/node_modules/
+/backend/.env
+/backend/npm-debug.log
+/backend/yarn-debug.log
+/backend/yarn-error.log
+/backend/.pnp
+/backend/.pnp.js
+/backend/coverage/
+/backend/tmp/
+/backend/logs/
+/backend/.DS_Store
+
+# Express uploads directory - keep the directory structure but ignore uploaded files
+/backend/public/images/profiles/*
+!/backend/public/images/profiles/.gitkeep
+/backend/public/uploads/*
+!/backend/public/uploads/.gitkeep
+
+# Frontend / React
+/frontend/node_modules/
+/frontend/.env
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+/frontend/.pnp
+/frontend/.pnp.js
+/frontend/coverage/
+/frontend/dist/
+# /frontend/build/
+/frontend/npm-debug.log
+/frontend/yarn-debug.log
+/frontend/yarn-error.log
+/frontend/.DS_Store
+
+# Editor settings
+.idea/
+.vscode/
+*.swp
+*.swo
+.vs/
+*~
+*.sublime*
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temporary files
+*.tmp
+*.log
+logs/
+tmp/
+
+# Local environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Dependency directories
+node_modules/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,7 @@
+[
+  { "category_id": "BLC_RESEP", "name": "Resep Cakalang", "slug": "resep-cakalang", "description": "Kumpulan resep olahan cakalang", "color": "#6366f1", "active": true },
+  { "category_id": "BLC_TIPS", "name": "Tips Masak", "slug": "tips-masak", "description": "Tips memasak & teknik dapur", "color": "#8b5cf6", "active": true },
+  { "category_id": "BLC_NUTRISI", "name": "Nutrisi & Kesehatan", "slug": "nutrisi-kesehatan", "description": "Manfaat gizi ikan cakalang", "color": "#10b981", "active": true },
+  { "category_id": "BLC_BUDAYA", "name": "Budaya Kuliner", "slug": "budaya-kuliner", "description": "Cerita & tradisi kuliner", "color": "#f59e0b", "active": true },
+  { "category_id": "BLC_PRODUK", "name": "Produk Unggulan", "slug": "produk-unggulan", "description": "Highlight produk Nusaboga", "color": "#ef4444", "active": true }
+]
