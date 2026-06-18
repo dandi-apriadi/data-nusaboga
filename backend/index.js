@@ -161,6 +161,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.APP_PORT || process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 const initializeDatabase = async () => {
     try {
@@ -262,11 +263,11 @@ const startServer = async () => {
     }
     
     // Start the HTTP server
-    app.listen(PORT, () => {
-        console.log(`🚀 Server running on port ${PORT}`);
+    app.listen(PORT, HOST, () => {
+        console.log(`🚀 Server running on ${HOST}:${PORT}`);
         console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
         console.log(`🌐 CORS Origin: ${process.env.CLIENT_ORIGIN || "http://localhost:3000"}`);
-        console.log(`🔗 API Base URL: http://localhost:${PORT}/api`);
+        console.log(`🔗 API Base URL: http://${HOST}:${PORT}/api`);
         if (process.env.AUTO_SYNC_BLOG_CATEGORIES === 'true') {
             console.log('🗂️  AUTO_SYNC_BLOG_CATEGORIES enabled');
         }

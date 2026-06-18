@@ -1,6 +1,21 @@
-// Unified minimal helper (removed duplicate logic & multiple defaults)
-const _API_BASE = (process.env.REACT_APP_API_BASE_URL || '').replace(/\/$/, '');
+// Unified image helper. Local uploads must be served by the backend, not the static frontend server.
+const stripTrailingSlash = (value = '') => String(value).replace(/\/$/, '');
+const stripApiSuffix = (value = '') => stripTrailingSlash(value).replace(/\/api(\/v\d+)?$/, '');
+const configuredApiBase = process.env.REACT_APP_API_BASE_URL || process.env.REACT_APP_API_URL || '';
 const _IMAGE_BASE = (process.env.REACT_APP_IMAGE_BASE_URL || '/uploads').replace(/\/$/, '');
+
+function defaultBackendOrigin() {
+  if (typeof window === 'undefined') return 'http://localhost:5000';
+  const { protocol, hostname, port } = window.location;
+  if (port === '3000' || port === '3001' || port === '5173') {
+    return `${protocol}//${hostname}:5000`;
+  }
+  return '';
+}
+
+function apiAssetOrigin() {
+  return stripApiSuffix(configuredApiBase || defaultBackendOrigin());
+}
 // Inline SVG placeholder (no network request, works in all environments)
 const PLACEHOLDER = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iOTAiPjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iOTAiIHJ4PSIxMiIgZmlsbD0iI2UxZTNlOCIvPjxwYXRoIGQ9Ik0yMCA2NWgxMjB2MTBIMjB6IiBmaWxsPSIjY2NjIiBvcGFjaXR5PSIuNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM0NTQ4NTkiIGZvbnQtZmFtaWx5PSJBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZiI+SW1hZ2U8L3RleHQ+PC9zdmc+';
 
@@ -24,7 +39,8 @@ export function buildImageUrl(path) {
     p = base + '/' + p;
   }
   p = '/' + p.replace(/^\/+/, '');
-  return _API_BASE + p;
+  const origin = apiAssetOrigin();
+  return origin ? origin + p : p;
 }
 
 export function placeholderImage() { return PLACEHOLDER; }

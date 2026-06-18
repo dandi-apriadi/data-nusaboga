@@ -479,17 +479,24 @@ export const listTopProductsPublic = async (req, res) => {
              p.name,
              p.description,
              p.price,
-             p.image_url,
+             COALESCE(NULLIF(p.image_url, ''), pi.primary_url, pi.first_url) AS image_url,
              p.stock,
              p.active,
              p.weight_grams,
              COALESCE(SUM(CASE WHEN o.status IN ('completed', 'shipped') THEN oi.quantity ELSE 0 END), 0) AS sold_count,
              (SELECT ROUND(AVG(r.rating),1) FROM reviews r WHERE r.product_id = p.product_id) AS avg_rating
       FROM products p
+      LEFT JOIN (
+        SELECT product_id,
+               MAX(CASE WHEN is_primary = 1 THEN url ELSE NULL END) AS primary_url,
+               MIN(url) AS first_url
+        FROM product_images
+        GROUP BY product_id
+      ) pi ON pi.product_id = p.product_id
       LEFT JOIN order_items oi ON oi.product_id = p.product_id
       LEFT JOIN orders o ON o.order_id = oi.order_id
       WHERE p.active = 1
-      GROUP BY p.product_id, p.name, p.description, p.price, p.image_url, p.stock, p.active, p.weight_grams
+      GROUP BY p.product_id, p.name, p.description, p.price, p.image_url, pi.primary_url, pi.first_url, p.stock, p.active, p.weight_grams
       ORDER BY sold_count DESC
       LIMIT :lim;
     `, { replacements: { lim } });
