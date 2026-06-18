@@ -594,7 +594,7 @@ const Products = () => {
         </Card>
 
         {/* Products Content */}
-          // Grid View - Compact Modern Design
+          {/* Grid View - Compact Modern Design */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
             {filteredProducts.map((product) => (
               <Card key={product.product_id} extra="group relative overflow-hidden border-0 shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:-translate-y-1">
