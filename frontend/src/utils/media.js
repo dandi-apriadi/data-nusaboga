@@ -11,10 +11,16 @@ const stripApiSuffix = (s = '') => s.replace(/\/api(\/v\d+)?$/, '');
 export const buildImageUrl = (path) => {
   if (!path) return '';
   if (/^https?:\/\//i.test(path)) return path; // already absolute
-  const baseEnv = process.env.REACT_APP_API_BASE_URL || '';
-  const origin = stripApiSuffix(stripTrailingSlash(baseEnv));
+  const baseEnv = process.env.REACT_APP_API_BASE_URL || process.env.REACT_APP_API_URL || '';
+  let origin = stripApiSuffix(stripTrailingSlash(baseEnv));
+  if (!origin && typeof window !== 'undefined') {
+    const { protocol, hostname, port } = window.location;
+    if (port === '3000' || port === '3001' || port === '5173') {
+      origin = `${protocol}//${hostname}:5000`;
+    }
+  }
   const normalizedPath = path.startsWith('/') ? path : '/' + path;
-  return origin + normalizedPath;
+  return origin ? origin + normalizedPath : normalizedPath;
 };
 
 // Optionally expose a placeholder constant (single source of truth)
